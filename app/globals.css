@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root { color-scheme: dark; }
+body {
+  background: #090c12;
+  background-image: radial-gradient(800px 380px at 85% -100px, rgba(59,158,255,0.16), transparent 70%);
+  background-repeat: no-repeat;
+  color: #d7dde8;
+}
+.wallet-adapter-button { height: 40px !important; font-size: 13px !important; border-radius: 8px !important; background: #12304f !important; color: #7fc0ff !important; font-family: inherit !important; }
+.wallet-adapter-modal-wrapper { background: #0f141c !important; }
+.field { @apply w-full rounded-lg border border-edge bg-panel2 px-4 py-3 text-sm outline-none transition placeholder:text-mute/70 focus:border-violet; }
+.label { @apply mb-1.5 block text-xs text-mute; }
+.card { @apply rounded-xl border border-edge bg-panel; }
+.btn { @apply rounded-lg px-5 py-3 text-sm font-bold uppercase tracking-wide transition disabled:cursor-not-allowed disabled:opacity-40; }
+.btn-primary { @apply btn text-[#06101c] hover:brightness-110; background: #3b9eff; }
+.btn-ghost { @apply btn border border-edge bg-panel2 text-violet hover:border-violet; }
+.pill { @apply rounded-lg border border-edge bg-panel2 px-3 py-2 text-xs text-mute transition hover:border-violet; }
+.pill-on { @apply border-violet bg-violet/10 text-violet; }
+.section-title { @apply text-sm text-violet; }
+.grad-text { background: linear-gradient(90deg, #7fc0ff, #3b9eff); -webkit-background-clip: text; color: transparent; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
