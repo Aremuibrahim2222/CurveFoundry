@@ -1,12 +1,16 @@
 import type { Config } from "tailwindcss";
+
+// Colors come from CSS variables (see app/globals.css) so light and dark mode share one set of class names.
+const v = (name: string) => `rgb(var(--${name}) / <alpha-value>)`;
+
 const config: Config = {
   content: ["./app/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}"],
   theme: {
     extend: {
       colors: {
-        ink: "#090c12", panel: "#0f141c", panel2: "#151b25", edge: "#1c2431", mute: "#6b7686",
-        violet: { DEFAULT: "#3b9eff" }, sky: { DEFAULT: "#4aa3ff" },
-        up: "#2fd08a", down: "#ff5c6c",
+        ink: v("ink"), panel: v("panel"), panel2: v("panel2"), edge: v("edge"), mute: v("mute"),
+        violet: v("accent"), sky: v("accent"), up: v("up"), down: v("down"),
+        white: v("fg"),
       },
       fontFamily: {
         sans: ["var(--font-mono)", "ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
