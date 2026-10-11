@@ -34,7 +34,7 @@ export default function About() {
         <p className="text-xs text-violet">About</p>
         <h1 className="text-3xl font-bold text-white sm:text-4xl">Design the market. <span className="grad-text">Then launch the asset.</span></h1>
         <p className="text-sm text-mute">CurveFoundry is a launchpad where you decide how a token launches and trades, not just whether it launches. You pick the mechanics, preview how the price behaves, and launch through Meteora&apos;s Dynamic Bonding Curve. When it grows enough, it graduates to Meteora DAMM v2.</p>
-        <div className="flex gap-3"><Link href="/design" className="btn-primary">Create token</Link><Link href="/" className="btn-ghost">Explore markets</Link></div>
+        <div className="flex gap-3"><Link href="/design" className="btn-primary">Create token</Link><Link href="/explore" className="btn-ghost">Explore markets</Link></div>
       </section>
 
       <section className="space-y-3">
