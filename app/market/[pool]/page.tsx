@@ -72,7 +72,7 @@ export default function MarketPage() {
   return (
     <div className="grid gap-3 lg:grid-cols-[1fr_340px]">
       <div className="space-y-3">
-        <div className="card flex flex-col gap-4 p-3 sm:flex-row">
+        <div className="card glass flex flex-col gap-4 p-3 sm:flex-row">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           {meta?.image_url ? <img src={meta.image_url} alt="" className="h-40 w-full rounded-lg object-cover sm:w-40" /> : <div className="flex h-40 w-full items-center justify-center rounded-lg bg-panel2 text-3xl font-bold text-mute sm:w-40">{symbol.slice(0, 4)}</div>}
           <div className="min-w-0 flex-1 space-y-2 text-xs">
