@@ -100,3 +100,7 @@ html.light .bg-amber-500\/20, html.light .bg-amber-500\/15 { background-color: r
   .reveal { opacity: 1; transform: none; }
   .fill-bar { width: 100%; }
 }
+
+/* Header bar: still glass, but dense enough that text passing behind it stays out of the way. */
+.glass.glass-strong { background: rgb(var(--panel) / 0.9); }
+html.light .glass.glass-strong { background: rgb(var(--panel) / 0.94); }
