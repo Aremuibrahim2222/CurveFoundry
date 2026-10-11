@@ -22,7 +22,7 @@ body {
   background-repeat: no-repeat;
   color: rgb(var(--body));
 }
-.wallet-adapter-button { height: 40px !important; font-size: 13px !important; border-radius: 8px !important; background: rgb(var(--panel2)) !important; color: rgb(var(--accent)) !important; border: 1px solid rgb(var(--edge)) !important; font-family: inherit !important; }
+.wallet-adapter-button { height: 40px !important; font-size: 13px !important; border-radius: 8px !important; background: rgb(var(--panel2)) !important; color: rgb(var(--accent)) !important; border: 1px solid rgb(var(--edge)) !important; font-family: inherit !important; white-space: nowrap !important; padding: 0 14px !important; }
 .wallet-adapter-button:not([disabled]):hover { background: rgb(var(--edge)) !important; }
 /* Wallet pop-up stays dark in both modes so its own text remains readable. */
 .wallet-adapter-modal-wrapper { background: #0f141c !important; }
