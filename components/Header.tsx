@@ -7,14 +7,15 @@ import { DEMO_MODE, NETWORK } from "@/lib/solana/utils";
 
 const WalletButton = dynamic(async () => (await import("@solana/wallet-adapter-react-ui")).WalletMultiButton, { ssr: false });
 
-const LINKS = [["/", "Home"], ["/explore", "Markets"], ["/design", "Create token"], ["/presets", "Presets"], ["/dashboard", "Dashboard"], ["/about", "About"]] as const;
+// The logo already goes home, so every menu item opens a different page.
+const LINKS = [["/explore", "Markets"], ["/design", "Create token"], ["/presets", "Presets"], ["/dashboard", "Dashboard"], ["/about", "About"]] as const;
 
 export default function Header() {
   const [open, setOpen] = useState(false);
   return (
     <header className="sticky top-3 z-30">
-      <div className="card glass flex h-16 items-center gap-4 px-4">
-        <Link href="/" className="flex shrink-0 items-center gap-2">
+      <div className="card glass glass-strong flex h-16 items-center gap-4 px-4">
+        <Link href="/" onClick={() => setOpen(false)} className="flex shrink-0 items-center gap-2">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/mark.png" alt="" className="h-7 w-auto" />
           <span className="font-bold tracking-tight text-white">Curve<span className="grad-text">Foundry</span></span>
@@ -33,7 +34,8 @@ export default function Header() {
         </div>
       </div>
       {open && (
-        <nav className="card glass mt-2 flex flex-col p-2 text-sm md:hidden">
+        // Solid background on purpose: the menu must stay readable over page content.
+        <nav className="card mt-2 flex flex-col bg-panel p-2 text-sm shadow-2xl md:hidden">
           {LINKS.map(([href, label]) => <Link key={href} href={href} onClick={() => setOpen(false)} className="rounded-lg px-3 py-3 text-violet hover:bg-panel2">{label}</Link>)}
           <div className="flex items-center justify-between px-3 py-2 text-xs text-mute sm:hidden"><span>Theme</span><ThemeToggle /></div>
         </nav>
