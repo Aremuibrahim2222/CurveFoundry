@@ -61,7 +61,7 @@ export default function TradePanel({ snap, baseDec, quoteDec, quoteSymbol, symbo
   const quick = buy && quoteSymbol === "SOL" ? ["0.05", "0.2", "1", "2"] : null;
 
   return (
-    <div className="card overflow-hidden">
+    <div className="card glass overflow-hidden">
       <div className="grid grid-cols-2 border-b border-edge text-xs font-bold">
         <button onClick={() => { setBuy(true); setAmount(""); }} className={`py-3 ${buy ? "bg-violet/10 text-violet" : "text-mute"}`}>BUY</button>
         <button onClick={() => { setBuy(false); setAmount(""); }} className={`py-3 ${!buy ? "bg-violet/10 text-violet" : "text-mute"}`}>SELL</button>

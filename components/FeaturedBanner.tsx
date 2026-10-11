@@ -34,7 +34,7 @@ export default function FeaturedBanner({ rows, live }: { rows: LaunchRow[]; live
       {/* eslint-disable-next-line @next/next/no-img-element */}
       {cur.image_url && <img src={cur.image_url} alt="" className="absolute inset-0 h-full w-full object-cover opacity-30 blur-sm" />}
       <div className="relative flex min-h-[220px] flex-col justify-between gap-6 bg-gradient-to-r from-ink/90 to-transparent p-6 sm:min-h-[280px] sm:flex-row sm:items-end sm:p-8">
-        <div className="space-y-3">
+        <div className="glass space-y-3 rounded-xl border p-4">
           <span className="rounded-lg bg-violet/15 px-2 py-1 text-[11px] text-violet">Featured</span>
           <h2 className="text-2xl font-bold text-white sm:text-4xl">{cur.name} <span className="text-mute">{cur.symbol}</span></h2>
           <p className="text-sm text-mute">{lv ? `${lv.progress.toFixed(1)}% to graduation · market cap ${formatCompact(lv.marketCap)} ${cur.quote}` : "Live stats unavailable"}</p>

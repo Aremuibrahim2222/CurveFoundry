@@ -12,8 +12,8 @@ const LINKS = [["/", "Home"], ["/explore", "Markets"], ["/design", "Create token
 export default function Header() {
   const [open, setOpen] = useState(false);
   return (
-    <header>
-      <div className="card flex h-16 items-center gap-4 px-4">
+    <header className="sticky top-3 z-30">
+      <div className="card glass flex h-16 items-center gap-4 px-4">
         <Link href="/" className="flex shrink-0 items-center gap-2">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/mark.png" alt="" className="h-7 w-auto" />
@@ -33,7 +33,7 @@ export default function Header() {
         </div>
       </div>
       {open && (
-        <nav className="card mt-2 flex flex-col p-2 text-sm md:hidden">
+        <nav className="card glass mt-2 flex flex-col p-2 text-sm md:hidden">
           {LINKS.map(([href, label]) => <Link key={href} href={href} onClick={() => setOpen(false)} className="rounded-lg px-3 py-3 text-violet hover:bg-panel2">{label}</Link>)}
           <div className="flex items-center justify-between px-3 py-2 text-xs text-mute sm:hidden"><span>Theme</span><ThemeToggle /></div>
         </nav>
