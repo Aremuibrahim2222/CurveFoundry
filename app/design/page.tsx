@@ -137,7 +137,7 @@ export default function CreatePage() {
         {fileErr && <span className="text-xs text-down">{fileErr}</span>}
       </label>
 
-      <section className="card space-y-3 p-4">
+      <section className="card glass space-y-3 p-4">
         <h2 className="section-title">1. Basic data</h2>
         <p className="text-xs text-mute">Once your token is created, this information cannot be changed.</p>
         <div>
