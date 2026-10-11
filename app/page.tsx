@@ -1,59 +1,65 @@
 "use client";
-import { useEffect, useMemo, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
-import FeaturedStrip from "@/components/FeaturedStrip";
-import Leaderboard from "@/components/Leaderboard";
-import { useLiveMarkets } from "@/hooks/useLiveMarkets";
-import { LaunchRow, listLaunches } from "@/lib/supabase/queries";
-import { DEMO_MODE, NETWORK } from "@/lib/solana/utils";
+import FeaturedBanner from "@/components/FeaturedBanner";
+import MarketTable from "@/components/MarketTable";
+import { useMarkets } from "@/hooks/useMarkets";
+import { DEMO_MODE, formatCompact } from "@/lib/solana/utils";
 
 const CATS = ["all", "ai", "stock", "rwa", "meme", "creator", "custom"];
-const DEMO: LaunchRow[] = [
-  { id: "d1", creator: "DEMO", name: "Demo Agent", symbol: "DEMO", category: "ai", image_url: null, base_mint: "demo", pool_address: "demo1", config_address: "demo", quote: "SOL", network: NETWORK, created_at: new Date().toISOString() },
+const steps = [
+  ["1", "Add a picture and name", "Upload an image, pick a name and ticker. That is all you need."],
+  ["2", "Choose how it grows", "Pick a style. We set the curve, fees and graduation for you."],
+  ["3", "Create and trade", "Approve in your wallet. Your token is live and tradable at once."],
 ];
 
 export default function Home() {
-  const [rows, setRows] = useState<LaunchRow[]>([]);
+  const { rows, live, loading, err } = useMarkets();
   const [cat, setCat] = useState("all");
-  const [err, setErr] = useState<string | null>(null);
-  useEffect(() => { (DEMO_MODE ? Promise.resolve(DEMO) : listLaunches(NETWORK)).then(setRows).catch((e) => setErr(e.message)); }, []);
-  const { live, loading } = useLiveMarkets(DEMO_MODE ? [] : rows);
-
-  const byProgress = useMemo(() => [...rows].sort((a, b) => (live[b.pool_address]?.progress ?? -1) - (live[a.pool_address]?.progress ?? -1)), [rows, live]);
-  const featured = byProgress.slice(0, 3);
-  const trending = byProgress.slice(0, 6);
-  const shown = rows.filter((r) => cat === "all" || r.category === cat);
+  const [q, setQ] = useState("");
+  const trending = [...rows].sort((a, b) => (live[b.pool_address]?.progress ?? 0) - (live[a.pool_address]?.progress ?? 0)).slice(0, 10);
 
   return (
-    <div className="space-y-6">
-      <section className="flex flex-col gap-4 py-2 sm:flex-row sm:items-end sm:justify-between">
-        <div>
-          <h1 className="text-3xl font-bold leading-tight text-white sm:text-4xl">Design the market.<br /><span className="grad-text">Then launch the asset.</span></h1>
-          <p className="mt-2 max-w-md text-sm text-mute">Launch a token with no code. It trades on a Meteora bonding curve, then graduates to DAMM v2.</p>
-        </div>
-        <div className="flex gap-2"><Link href="/design" className="btn-primary">Create token</Link><Link href="/explore" className="btn-ghost">Explore</Link></div>
-      </section>
+    <div className="space-y-5">
+      <div>
+        <h1 className="text-2xl font-bold text-white sm:text-3xl">Design the market. <span className="grad-text">Then launch the asset.</span></h1>
+        <p className="mt-1 text-xs text-mute">Launch tokens on Meteora&apos;s bonding curve. They graduate to Meteora DAMM v2 automatically.</p>
+      </div>
 
+      <div className="flex flex-wrap items-center gap-2">
+        {CATS.map((c) => <button key={c} onClick={() => setCat(c)} className={`pill ${cat === c ? "pill-on" : ""}`}>{c === "all" ? "All" : c}</button>)}
+        <input className="field ml-auto !w-full !py-2 sm:!w-64" placeholder="Search tokens…" value={q} onChange={(e) => setQ(e.target.value)} />
+      </div>
       {DEMO_MODE && <p className="text-xs text-amber-300">DEMO MODE: sample data, not on-chain.</p>}
       {err && <p className="text-sm text-down">{err}</p>}
-      <FeaturedStrip rows={featured} live={live} />
 
-      {trending.some((t) => live[t.pool_address]) && (
+      <FeaturedBanner rows={rows} live={live} />
+
+      {trending.length > 0 && (
         <div className="flex gap-2 overflow-x-auto pb-1">
-          {trending.map((t) => { const s = live[t.pool_address]; return s ? (
-            <Link key={t.id} href={`/market/${t.pool_address}`} className="pill flex shrink-0 items-center gap-2 !text-white">
-              <span>{t.name}</span><span className="text-mute">{s.price.toPrecision(3)} {t.quote}</span><span className="text-violet">{s.progress.toFixed(0)}%</span>
-            </Link>) : null; })}
+          {trending.map((t) => {
+            const lv = live[t.pool_address];
+            return (
+              <Link key={t.id} href={DEMO_MODE ? "#" : `/market/${t.pool_address}`} className="card flex shrink-0 items-center gap-3 px-3 py-2 hover:border-violet">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                {t.image_url ? <img src={t.image_url} alt="" className="h-8 w-8 rounded-lg object-cover" /> : <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-panel2 text-[10px] text-mute">{t.symbol.slice(0, 3)}</span>}
+                <span className="text-xs"><span className="block text-white">{t.name}</span><span className="text-mute">{lv ? `${lv.price.toPrecision(3)} ${t.quote} · ${lv.progress.toFixed(0)}%` : "n/a"}</span></span>
+              </Link>
+            );
+          })}
         </div>
       )}
 
+      {loading ? <p className="text-sm text-mute">Loading markets…</p> : <MarketTable rows={rows} live={live} category={cat} query={q} />}
+
       <section className="space-y-3">
-        <div className="flex flex-wrap items-center gap-2">
-          <h2 className="mr-2 text-lg font-bold text-white">Top tokens</h2>
-          {CATS.map((c) => <button key={c} onClick={() => setCat(c)} className={`pill ${cat === c ? "pill-on" : ""}`}>{c}</button>)}
-          <Link href="/design" className="btn-ghost ml-auto !py-2">Create token</Link>
+        <h2 className="text-lg font-bold text-white">How it works</h2>
+        <div className="grid gap-3 sm:grid-cols-3">
+          {steps.map(([n, t, d]) => (
+            <div key={n} className="card p-4"><div className="text-violet">{n}</div><div className="mt-1 text-white">{t}</div><p className="mt-1 text-xs text-mute">{d}</p></div>
+          ))}
         </div>
-        <Leaderboard rows={shown} live={live} loading={loading} disableLinks={DEMO_MODE} />
+        <p className="text-[11px] text-mute">{rows.length} token{rows.length === 1 ? "" : "s"} listed{rows.length ? ` · total market cap ${formatCompact(Object.values(live).reduce((a, x) => a + x.marketCap, 0))} (SOL-quoted tokens)` : ""}.</p>
       </section>
     </div>
   );
