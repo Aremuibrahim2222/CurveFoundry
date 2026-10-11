@@ -8,7 +8,7 @@ export interface SocialLinks { telegram?: string; twitter?: string; website?: st
 /** Uploads the token image and a metadata JSON to Supabase Storage. Returns the public metadata URI. */
 export async function uploadTokenMetadata(a: { name: string; symbol: string; description: string; image: File; links?: SocialLinks }) {
   const sb = getSupabase();
-  if (!sb) throw new Error("Image upload needs Supabase. Add your Supabase keys, or paste a metadata link under Advanced.");
+  if (!sb) throw new Error("Image upload needs Supabase. Add your Supabase keys.");
   if (!a.image.type.startsWith("image/")) throw new Error("Please choose an image file.");
   if (a.image.size > MAX_BYTES) throw new Error("Image is too big. Please use one under 5 MB.");
   const id = crypto.randomUUID();
