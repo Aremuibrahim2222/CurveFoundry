@@ -14,7 +14,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: "try{if(localStorage.getItem('cf-theme')==='light')document.documentElement.classList.add('light')}catch(e){}" }} />
+      </head>
       <body className={`${mono.variable} font-mono antialiased`}>
         <Providers>
           <div className="mx-auto max-w-6xl px-3 py-3">
