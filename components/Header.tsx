@@ -17,6 +17,7 @@ export default function Header() {
         <Link className="hover:text-white" href="/">Home</Link>
         <Link className="hover:text-white" href="/design">Create token</Link>
         <Link className="hover:text-white" href="/presets">Presets</Link>
+        <Link className="hover:text-white" href="/about">About</Link>
         <Link className="hover:text-white" href="/dashboard">Profile</Link>
       </nav>
       <div className="ml-auto flex items-center gap-2">
