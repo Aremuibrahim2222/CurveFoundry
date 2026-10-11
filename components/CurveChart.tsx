@@ -46,16 +46,16 @@ export default function CurveChart({ points, quoteLabel, markerSold, height = 28
         <defs><linearGradient id="cg" x1="0" x2="1"><stop offset="0" stopColor="#8b5cf6" /><stop offset="1" stopColor="#38bdf8" /></linearGradient></defs>
         {[0, 0.25, 0.5, 0.75, 1].map((t) => (
           <g key={t}>
-            <line x1={P.l} x2={W - P.r} y1={ys(maxY * t)} y2={ys(maxY * t)} stroke="#1e1e2e" />
-            <text x={P.l - 6} y={ys(maxY * t) + 4} textAnchor="end" fontSize="10" fill="#8a8aa3">{formatCompact(maxY * t)}</text>
+            <line x1={P.l} x2={W - P.r} y1={ys(maxY * t)} y2={ys(maxY * t)} className="stroke-edge" />
+            <text x={P.l - 6} y={ys(maxY * t) + 4} textAnchor="end" fontSize="10" className="fill-mute">{formatCompact(maxY * t)}</text>
           </g>
         ))}
         <path d={path} fill="none" stroke="url(#cg)" strokeWidth="2.5" />
         <line x1={xs(last.tokensSold)} x2={xs(last.tokensSold)} y1={P.t} y2={H - P.b} stroke="#8b5cf6" strokeDasharray="4 4" />
         <text x={xs(last.tokensSold) - 6} y={P.t + 10} textAnchor="end" fontSize="10" fill="#a78bfa">Graduation → DAMM v2</text>
-        {marker && <circle cx={xs(marker.tokensSold)} cy={ys(marker[mode])} r="5" fill="#34d399" stroke="#07070c" strokeWidth="2" />}
-        {hp && <circle cx={xs(hp.tokensSold)} cy={ys(hp[mode])} r="4" fill="#fff" />}
-        <text x={W / 2} y={H - 6} textAnchor="middle" fontSize="10" fill="#8a8aa3">Tokens sold along the curve</text>
+        {marker && <circle cx={xs(marker.tokensSold)} cy={ys(marker[mode])} r="5" fill="#34d399" className="stroke-ink" strokeWidth="2" />}
+        {hp && <circle cx={xs(hp.tokensSold)} cy={ys(hp[mode])} r="4" className="fill-white" />}
+        <text x={W / 2} y={H - 6} textAnchor="middle" fontSize="10" className="fill-mute">Tokens sold along the curve</text>
       </svg>
       <p className="mt-1 text-[11px] text-mute">Preview computed from the Meteora config produced by the SDK. Prices in {quoteLabel} per token.</p>
     </div>

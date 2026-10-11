@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import dynamic from "next/dynamic";
+import ThemeToggle from "@/components/ThemeToggle";
 import { DEMO_MODE, NETWORK } from "@/lib/solana/utils";
 
 const WalletButton = dynamic(async () => (await import("@solana/wallet-adapter-react-ui")).WalletMultiButton, { ssr: false });
@@ -23,6 +24,7 @@ export default function Header() {
       <div className="ml-auto flex items-center gap-2">
         <span className="hidden rounded-lg border border-edge px-2 py-1 text-[11px] text-mute sm:inline">{NETWORK}</span>
         {DEMO_MODE && <span className="rounded-lg bg-amber-500/20 px-2 py-1 text-[11px] text-amber-300">DEMO MODE</span>}
+        <ThemeToggle />
         <WalletButton />
       </div>
     </header>
