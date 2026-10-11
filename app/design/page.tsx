@@ -36,7 +36,6 @@ export default function CreatePage() {
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [fileErr, setFileErr] = useState<string | null>(null);
-  const [advUri, setAdvUri] = useState("");
   const [simBuy, setSimBuy] = useState("1");
   const [showJson, setShowJson] = useState(false);
   const [steps, setSteps] = useState<Step[]>([]);
@@ -62,7 +61,7 @@ export default function CreatePage() {
   const num = (v: string) => (v === "" ? 0 : Number(v));
   const setField = <K extends keyof CurveDefinition>(k: K, v: CurveDefinition[K]) =>
     setDef((d) => ({ ...d, [k]: v, preset: k === "initialMarketCap" || k === "migrationMarketCap" ? "custom" : d.preset }));
-  const ready = meta.name.trim().length > 0 && meta.symbol.trim().length >= 2 && (!!file || advUri.trim().length > 0) && errors.length === 0 && !built.error;
+  const ready = meta.name.trim().length > 0 && meta.symbol.trim().length >= 2 && !!file && errors.length === 0 && !built.error;
 
   function pickFile(f: File | undefined | null) {
     setFileErr(null);
@@ -80,8 +79,8 @@ export default function CreatePage() {
     const s: Step[] = ["Prepare token info", "Create market settings", "Create your token", "Done"].map((label) => ({ label, status: "idle" as const }));
     s[0].status = "active"; setSteps([...s]);
     try {
-      let uri = advUri.trim(), imageUrl = "";
-      if (!uri && file) {
+      let uri = "", imageUrl = "";
+      if (file) {
         const r = await uploadTokenMetadata({ name: meta.name.trim(), symbol: meta.symbol.trim(), description: meta.description.trim(), image: file, links });
         uri = r.uri; imageUrl = r.imageUrl;
       }
@@ -178,7 +177,6 @@ export default function CreatePage() {
             <div><label className="label">Creator fee share (%)</label><input className="field" value={def.creatorTradingFeePct} onChange={(e) => setField("creatorTradingFeePct", num(e.target.value))} /></div>
             <div><label className="label">Locked liquidity (%)</label><input className="field" value={def.lockedLiquidityPct} onChange={(e) => setField("lockedLiquidityPct", num(e.target.value))} /></div>
           </div>
-          <div><label className="label">Already have a metadata link? Paste it instead of uploading an image</label><input className="field" placeholder="https://…/token.json" value={advUri} onChange={(e) => setAdvUri(e.target.value)} /></div>
         </div>
       </details>
 
