@@ -60,7 +60,6 @@ export default function About() {
           <div className="card p-4"><div className="text-sm text-white">Dynamic Bonding Curve (DBC)</div><p className="mt-1 text-xs text-mute">Runs the launch: the curve, the fees and the graduation target.</p></div>
           <div className="card p-4"><div className="text-sm text-white">DAMM v2</div><p className="mt-1 text-xs text-mute">Takes over after graduation as the token&apos;s liquidity pool.</p></div>
         </div>
-        <p className="text-xs text-mute">CurveFoundry is built for the Meteora Sidetrack at Crypto World&apos;s Fair.</p>
       </section>
 
       <section className="space-y-3">
